@@ -1,0 +1,43 @@
+<div class="wishlist-container">
+    <div class="wishlist-header">
+        <div class="header-content">
+            <h1 class="wishlist-title">
+                <span class="heart-icon">♥</span>
+                My Wishlist
+            </h1>
+            <p class="wishlist-count">{{wishlistBooks.length}} book{{wishlistBooks.length !== 1 ? 's' : ''}}</p>
+        </div>
+        <button *ngIf="wishlistBooks.length > 0" class="clear-btn" (click)="clearWishlist()">
+            Clear All
+        </button>
+    </div>
+
+    <div *ngIf="wishlistBooks.length === 0" class="empty-state">
+        <div class="empty-icon">📚</div>
+        <h2>Your wishlist is empty</h2>
+        <p>Start adding books you love to your wishlist!</p>
+        <a routerLink="/" class="browse-btn">Browse Books</a>
+    </div>
+
+    <div *ngIf="wishlistBooks.length > 0" class="wishlist-grid">
+        <div class="wishlist-card" *ngFor="let book of wishlistBooks">
+            <button class="remove-btn" (click)="removeFromWishlist(book.key)" title="Remove from wishlist">
+                <span>×</span>
+            </button>
+
+            <div class="card-image-wrapper" (click)="viewDetails(book.key)">
+                <img *ngIf="book.cover_id" [src]="'https://covers.openlibrary.org/b/id/' + book.cover_id + '-M.jpg'"
+                    alt="{{book.title}}" class="book-cover">
+                <div *ngIf="!book.cover_id" class="no-cover">
+                    <span>📚</span>
+                </div>
+            </div>
+
+            <div class="card-content" (click)="viewDetails(book.key)">
+                <h3 class="book-title">{{book.title}}</h3>
+                <p class="book-year" *ngIf="book.first_publish_year">{{book.first_publish_year}}</p>
+                <span class="edition-count" *ngIf="book.edition_count">{{book.edition_count}} Editions</span>
+            </div>
+        </div>
+    </div>
+</div>

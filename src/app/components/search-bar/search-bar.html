@@ -1,0 +1,11 @@
+<div class="search-container">
+    <div class="search-wrapper">
+        <div class="input-group">
+            <input type="text" [(ngModel)]="title" placeholder="Search by book title..." class="search-input" />
+            <input type="number" [(ngModel)]="year" placeholder="Year" class="year-input" />
+            <button (click)="onSearch()" class="search-button">
+                Search
+            </button>
+        </div>
+    </div>
+</div>

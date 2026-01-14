@@ -1,0 +1,100 @@
+<div class="details-container" *ngIf="book">
+    <div class="details-card">
+        <!-- Header avec Prix et Rating -->
+        <div class="header-section">
+            <div class="title-group">
+                <h2 class="detail-title">{{book.title}}</h2>
+                <h3 class="detail-subtitle" *ngIf="book.subtitle">{{book.subtitle}}</h3>
+            </div>
+            <div class="price-rating-group">
+                <div class="price-tag">${{book.price}}</div>
+                <div class="rating-display">
+                    <span class="stars">
+                        <span *ngFor="let star of getStarArray(book.rating)" [class.filled]="star === 1">⭐</span>
+                    </span>
+                    <span class="rating-value">{{book.rating}}/5</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Grid -->
+        <div class="info-grid">
+            <div class="info-card">
+                <span class="info-icon">📅</span>
+                <div class="info-content">
+                    <span class="info-label">Published</span>
+                    <span class="info-value">{{book.first_publish_date}}</span>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <span class="info-icon">📖</span>
+                <div class="info-content">
+                    <span class="info-label">Pages</span>
+                    <span class="info-value">{{book.pages}}</span>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <span class="info-icon">🌐</span>
+                <div class="info-content">
+                    <span class="info-label">Language</span>
+                    <span class="info-value">{{book.language}}</span>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <span class="info-icon">🔖</span>
+                <div class="info-content">
+                    <span class="info-label">ISBN</span>
+                    <span class="info-value">{{book.isbn}}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Genres -->
+        <div class="genre-section">
+            <h4>Genres</h4>
+            <div class="genre-tags">
+                <span class="genre-tag" *ngFor="let genre of book.genre">{{genre}}</span>
+            </div>
+        </div>
+
+        <!-- Statut -->
+        <div class="status-section">
+            <div class="status-badge" [class.available]="book.status === 'Available'"
+                [class.limited]="book.status === 'Limited'">
+                <span class="status-dot"></span>
+                {{book.status}}
+            </div>
+        </div>
+
+        <!-- Description -->
+        <div class="description-section" *ngIf="book.description">
+            <h3>Description</h3>
+            <p class="description-text">{{book.description}}</p>
+        </div>
+
+        <!-- Cover -->
+        <div class="cover-section" *ngIf="book.covers && book.covers.length > 0">
+            <img [src]="'https://covers.openlibrary.org/b/id/' + book.covers[0] + '-L.jpg'" class="detail-cover"
+                alt="Cover">
+        </div>
+
+        <!-- BOUTONS ICI - EN BAS -->
+        <div class="actions">
+            <a routerLink="/" class="back-link">← Back to List</a>
+            <button class="wishlist-btn" (click)="toggleWishlist()">
+                {{ isInWishlist() ? '♥ In Wishlist' : '♡ Add to Wishlist' }}
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="error-container" *ngIf="!book">
+    <div class="error-card">
+        <h3>📚 Livre non trouvé</h3>
+        <p>Ce livre n'existe pas dans notre catalogue.</p>
+        <a routerLink="/" class="back-link">Retour à l'accueil</a>
+    </div>
+</div>
